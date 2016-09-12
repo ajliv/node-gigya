@@ -1,0 +1,93 @@
+#!/usr/bin/env node
+
+const bodyParser = require('body-parser');
+const express = require('express');
+const Gigya = require('../lib/gigya');
+const logger = require('morgan');
+const debug = require('debug')('expressapp:server');
+const http = require('http');
+
+const gigya = new Gigya(process.env.API_KEY, process.env.SECRET_KEY);
+const app = express();
+const port = 3000;
+
+app.set('port', port);
+app.use(logger('tiny'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/ping', (req, res) => res.send('pong'));
+
+app.all('*', (req, res, next) => {
+    const endpoint = req.path.slice(1);
+    const params = req.method === 'GET' ? req.query : req.body;
+    gigya.request(endpoint, params)
+        .then(json => {
+            req.responseJSON = json;
+            next();
+        })
+        .catch(err => next(err));
+});
+
+/* ----------  Success Handlers  ---------- */
+
+app.use((req, res, next) => {
+    if (req.responseJSON) {
+        res.json({ status: 'ok', data: req.responseJSON });
+    } else {
+        next();
+    }
+});
+
+/* ----------  Error Handlers  ---------- */
+
+app.use((req, res, next) => {
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+app.use((err, req, res, next) => {
+    const status = err.status || 500;
+    res.status(status);
+    res.json({
+        status: 'error',
+        errorMessage: err.message,
+        code: status
+    });
+});
+
+
+
+const server = http.createServer(app);
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+
+function onError(err) {
+    if (err.syscall !== 'listen') {
+        throw err;
+    }
+    const bind = (typeof port === 'string') ? `Pipe ${port}` : `Port ${port}`;
+    switch (err.code) {
+    case 'EACCES':
+        // eslint-disable-next-line no-console
+        console.error(`${bind} requires elevated privileges`);
+        process.exit(1);
+        break;
+    case 'EADDRINUSE':
+        // eslint-disable-next-line no-console
+        console.error(`${bind} is already in use`);
+        process.exit(1);
+        break;
+    default:
+        throw err;
+    }
+}
+
+function onListening() {
+    const addr = server.address();
+    const bind = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
+    debug(`Listening on ${bind}`);
+}

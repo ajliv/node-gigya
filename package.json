@@ -1,0 +1,29 @@
+{
+  "name": "node-gigya",
+  "version": "0.0.1",
+  "description": "Node.js wrapper for the Gigya REST API",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint **/*.js",
+    "start": "node bin/www"
+  },
+  "keywords": [
+    "node",
+    "gigya",
+    "api"
+  ],
+  "author": "ajliv",
+  "license": "ISC",
+  "devDependencies": {
+    "body-parser": "^1.15.2",
+    "debug": "^2.2.0",
+    "eslint": "^3.5.0",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0"
+  },
+  "dependencies": {
+    "lodash": "^4.15.0",
+    "node-fetch": "^1.6.0",
+    "qs": "^6.2.1"
+  }
+}

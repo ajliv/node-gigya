@@ -3,7 +3,7 @@
 A simple Node.js wrapper for the Gigya REST API. Based on the official Gigya Server Side SDKs
 
 
-## Depenencies
+## Dependencies
 
 * **node-fetch** - ^1.6.0
 * **qs** - ^6.2.1
@@ -13,16 +13,14 @@ A simple Node.js wrapper for the Gigya REST API. Based on the official Gigya Ser
 
 via npm:
 
-```
-npm install node-gigya
-```
+`npm install node-gigya`
 
 
 ## Usage
 
 ### .request(method, params)
 
-The `request` method that takes an endpoint string and an object with request parameters. A predefined list of endpoints have also been mapped to the instance and are bound to the `request` method (see the white list below.) Methods implement a promisable interface via **node-fetch**.
+The `request` method that takes an endpoint string and an object with request parameters. A predefined list of endpoints have also been mapped to the instance and are bound to the `request` method (see the white list below.)
 
 
 ```javascript
@@ -61,9 +59,7 @@ Utilitiy method for validating a user signature, pass in the UID, signatureTimes
 
 ### SigUtils.calcSignature(baseString, key)
 
-Utility method for creating a Base64 endoced signature. Pass in a base string and the site secret key. User signatures use a base string in the format of *%TIMESTAMP%*_*%UID%*. Returns Base64 encoded signature.
-
-
+Utility method for creating a Base64 encoded signature. Pass in a base string and the site secret key. User signatures use a base string in the format of *%TIMESTAMP%*_*%UID%*. Returns Base64 encoded signature.
 
 
 ## Whitelist of API endpoints

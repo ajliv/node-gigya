@@ -2,16 +2,19 @@
 
 A simple Node.js wrapper for the Gigya REST API. Based on the official Gigya Server Side SDKs
 
+
 ## Depenencies
 
 * **node-fetch** - ^1.6.0
 * **qs** - ^6.2.1
+
 
 ## Installation
 
 via npm:
 
 `npm install node-gigya`
+
 
 ## Usage
 
@@ -27,9 +30,9 @@ cosnt myGigya = new Gigya(myAPIKey, mySecretKey);
 
 // get a user's account info:
 const req = myGigya.request('accounts.getAccountInfo', { uid: 'useridhere' });
-// OR by using the mapped method..
+// OR by using the mapped method.. 
 // const req = myGigya.accounts.getAccountInfo({ uid: 'useridhere' });
-
+	
 req.then(
 	response => {
 		// response is the json response object from the api
@@ -41,6 +44,25 @@ req.then(
 	}
 );
 ```
+
+## SigUtils
+
+Included static utility methods for calculating and validating signatures in accordance with Gigya's [Security Guidelines](http://developers.gigya.com/display/GD/Security+Guidelines)
+
+```
+const SigUtils = require('node-gigya').SigUtils;
+```
+
+### SigUtils.validateUserSignature(UID, timestamp, secret, signature)
+
+Utilitiy method for validating a user signature, pass in the UID, signatureTimesatmp, site secret key, and the UIDSignature. Returns true or false.
+
+### SigUtils.calcSignature(baseString, key)
+
+Utility method for creating a Base64 endoced signature. Pass in a base string and the site secret key. User signatures use a base string in the format of *%TIMESTAMP%*_*%UID%*. Returns Base64 encoded signature.
+
+
+
 
 ## Whitelist of API endpoints
 

@@ -13,7 +13,9 @@ A simple Node.js wrapper for the Gigya REST API. Based on the official Gigya Ser
 
 via npm:
 
-`npm install node-gigya`
+```
+npm install node-gigya
+```
 
 
 ## Usage
@@ -49,7 +51,7 @@ req.then(
 
 Included static utility methods for calculating and validating signatures in accordance with Gigya's [Security Guidelines](http://developers.gigya.com/display/GD/Security+Guidelines)
 
-```
+```javascript
 const SigUtils = require('node-gigya').SigUtils;
 ```
 

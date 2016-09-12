@@ -8,6 +8,10 @@
   ],
   "author": "ajliv",
   "license": "GNU General Public License",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ajliv/node-gigya"
+  },
   "dependencies": {
     "node-fetch": "^1.6.0",
     "qs": "^6.2.1"

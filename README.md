@@ -26,13 +26,13 @@ The `request` method that takes an endpoint string and an object with request pa
 ```javascript
 const Gigya = require('node-gigya');
 
-cosnt myGigya = new Gigya(myAPIKey, mySecretKey);
+const myGigya = new Gigya(myAPIKey, mySecretKey);
 
 // get a user's account info:
 const req = myGigya.request('accounts.getAccountInfo', { uid: 'useridhere' });
-// OR by using the mapped method.. 
+// OR by using the mapped method..
 // const req = myGigya.accounts.getAccountInfo({ uid: 'useridhere' });
-	
+
 req.then(
 	response => {
 		// response is the json response object from the api
